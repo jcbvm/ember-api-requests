@@ -1,1 +1,1 @@
-export { default } from 'ember-api-requests/services/requests';
+export { default } from 'ember-api-requests/services/api';

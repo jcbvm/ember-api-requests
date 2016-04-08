@@ -1,7 +1,7 @@
 {
   "name": "ember-api-requests",
-  "version": "0.1.0",
-  "description": "Ember addon for making requests to your backend API.",
+  "version": "0.1.1",
+  "description": "Service for making custom requests to a backend API.",
   "repository": "git://github.com/jcbvm/ember-api-requests.git",
   "directories": {
     "doc": "doc",

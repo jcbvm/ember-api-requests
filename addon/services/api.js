@@ -2,17 +2,15 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import AjaxService from 'ember-ajax/services/ajax';
 
-const { assert, inject, $ } = Ember;
+const { assert, inject } = Ember;
 
 /**
- * Service for making requests to a backend API.
+ * Service for making custom requests to a backend API.
+ * This service extends ember-ajax but uses ember-data for building the URL.
  *
- * This service extends ember-ajax with the following abilities:
- * - Ability to build URL based on ember-data model name or instance 
- * - Option to automaticly transform request in a JSON request
- * - Option to define extra query parameters to be added to the final URL
- *
- * @class RequestsService
+ * @namespace ember-api-requests
+ * @class ApiService
+ * @extends AjaxService
  */
 export default AjaxService.extend({
     store: inject.service(),

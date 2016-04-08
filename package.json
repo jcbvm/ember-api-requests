@@ -1,7 +1,8 @@
 {
   "name": "ember-api-requests",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "Ember addon for making requests to your backend API.",
+  "repository": "git://github.com/jcbvm/ember-api-requests.git",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,15 +12,13 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Jacob van Mourik",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
-    "ember-ajax": "0.7.1",
     "ember-cli": "2.4.3",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
@@ -42,6 +41,7 @@
     "ember-addon"
   ],
   "dependencies": {
+    "ember-ajax": "^0.7.1",
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {

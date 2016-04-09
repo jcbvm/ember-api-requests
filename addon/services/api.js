@@ -33,6 +33,17 @@ export default AjaxService.extend({
      * @return {String} The full URL
      */
 	buildURL(path, options = {}) {
+		return this._buildURL(this._buildApiURL(path, options));
+	},
+
+    /**
+     * @method _buildApiURL
+	 * @private
+     * @param {String} path
+     * @param {Object} options
+     * @return {String}
+     */
+    _buildApiURL(path, options = {}) {
 		let id = null,
             snapshot = null,
             requestType = null,
@@ -61,7 +72,7 @@ export default AjaxService.extend({
         }
 
         return result;
-	},
+    },
 
 	/**
      * @method options
@@ -71,7 +82,7 @@ export default AjaxService.extend({
      * @return {Object}
      */
 	options(url, options = {}) {
-		url = this.buildURL(url, options);
+		url = this._buildApiURL(url, options);
 
 		if (options.jsonData) {
             options.data = JSON.stringify(options.jsonData);

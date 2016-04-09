@@ -2,7 +2,6 @@
   "name": "ember-api-requests",
   "version": "0.1.1",
   "description": "Service for making custom requests to a backend API.",
-  "repository": "git://github.com/jcbvm/ember-api-requests.git",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -12,6 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
+  "repository": "git://github.com/jcbvm/ember-api-requests.git",
   "engines": {
     "node": ">= 0.10.0"
   },

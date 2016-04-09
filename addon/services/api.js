@@ -1,8 +1,9 @@
 import Ember from 'ember';
-import Model from 'ember-data/model';
+import DS from 'ember-data';
 import AjaxService from 'ember-ajax/services/ajax';
 
 const { assert, inject } = Ember;
+const { Model } = DS;
 
 /**
  * Service for making custom requests to a backend API.
@@ -69,7 +70,7 @@ export default AjaxService.extend({
      * @param {Object} options
      * @return {Object}
      */
-	options(url, options) {
+	options(url, options = {}) {
 		url = this.buildURL(url, options);
 
 		if (options.jsonData) {

@@ -68,6 +68,43 @@ All below options are optional.
 |:---|:---|
 | buildURL(path, options) | The function used by the request methods mentioned above to create a request URL. |
 
+## Examples
+
+```javascript
+this.get('api').request('authenticate', {
+  data: {
+	username: 'john',
+	password: 'password'
+  }
+});
+```
+`GET` request to `/authenticate?username=john&password=password`
+
+```javascript
+this.get('api').request('logout');
+```
+`GET` request to `/logout`
+
+```javascript
+this.get('api').post('notify', {
+  model: user,
+  jsonData: {
+	text: 'Hello'
+  }
+});
+```
+`POST` request to `/users/1/notify` with content type `application/json;charset=UTF-8` and body `{"text":"Hello"}`
+
+```javascript
+this.get('api').put('split', {
+  model: document,
+  params: {
+	page: [2, 4]
+  }
+});
+```
+`PUT` request to `/documents/1/split?page=2&page=4`
+
 ## License
 
 This project is released under the MIT license.

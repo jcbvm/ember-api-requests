@@ -2,18 +2,15 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { moduleFor, test } from 'ember-qunit';
 
-let service, store, owner;
+let service, store;
 
 moduleFor('service:api', {
     beforeEach() {
+        this.register('model:user', DS.Model);
         service = this.subject();
         store = service.get('store');
-        owner = Ember.getOwner(service);
-        owner.register('model:user', DS.Model);
     },
     afterEach() {
-        owner.unregister('model:user');
-        owner = null;
         service = null;
         store = null;
     }

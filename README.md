@@ -30,7 +30,7 @@ export default Ember.Service.extend({
 });
 ```
 
-When calling above method with username `John`, a request will be made to `/api/users/check-username?username=John`.
+When calling above method with username `john`, a request will be made to `/api/users/check-username?username=john`.
 
 The request takes a 'action' path as first parameter and an options object as second parameter. 
 The service will create the URL from the given model name and the corresponding adapter. 
@@ -67,6 +67,43 @@ All below options are optional.
 | name | description | 
 |:---|:---|
 | buildURL(path, options) | The function used by the request methods mentioned above to create a request URL. |
+
+## Examples
+
+```javascript
+this.get('api').request('authenticate', {
+  data: {
+	username: 'john',
+	password: 'password'
+  }
+});
+```
+`GET` request to `/authenticate?username=john&password=password`
+
+```javascript
+this.get('api').request('logout');
+```
+`GET` request to `/logout`
+
+```javascript
+this.get('api').post('notify', {
+  model: user,
+  jsonData: {
+	text: 'Hello'
+  }
+});
+```
+`POST` request to `/users/1/notify` with content type `application/json;charset=UTF-8` and body `{"text":"Hello"}`
+
+```javascript
+this.get('api').put('split', {
+  model: document,
+  params: {
+	page: [2, 4]
+  }
+});
+```
+`PUT` request to `/documents/1/split?page=2&page=4`
 
 ## License
 

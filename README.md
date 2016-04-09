@@ -30,7 +30,7 @@ export default Ember.Service.extend({
 });
 ```
 
-When calling above method with username `John`, a request will be made to `/api/users/check-username?username=John`.
+When calling above method with username `john`, a request will be made to `/api/users/check-username?username=john`.
 
 The request takes a 'action' path as first parameter and an options object as second parameter. 
 The service will create the URL from the given model name and the corresponding adapter. 

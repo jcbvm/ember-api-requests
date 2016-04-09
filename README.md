@@ -1,4 +1,4 @@
-# ember-api-requests
+# ember-api-requests [![Build Status](https://travis-ci.org/jcbvm/ember-api-requests.svg?branch=master)](https://travis-ci.org/jcbvm/ember-api-requests)
 
 Service for making custom requests to your backend API.
 

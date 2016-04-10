@@ -73,7 +73,7 @@ All below options are optional.
 
 ```javascript
 this.get('api').request('authenticate', {
-  data: {
+  params: {
 	username: 'john',
 	password: 'password'
   }
@@ -104,7 +104,7 @@ this.get('api').put('split', {
   }
 });
 ```
-`PUT` request to `/documents/1/split?page=2&page=4`
+`PUT` request to `/documents/1/split?page[]=2&page[]=4`
 
 ## License
 

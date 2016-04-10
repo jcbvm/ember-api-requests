@@ -23,7 +23,7 @@ export default Ember.Service.extend({
   usernameExists(username) {
     return this.get('api').request('check-username', {
       model: 'user',
-      data: {
+      params: {
         username: username
       }
     });

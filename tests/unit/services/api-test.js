@@ -4,11 +4,6 @@ import { moduleFor, test } from 'ember-qunit';
 
 let service, store;
 
-const testData = {
-    test2: 2,
-    test1: 1
-};
-
 moduleFor('service:api', {
     beforeEach() {
         this.register('model:user', DS.Model);
@@ -37,12 +32,23 @@ test('buildURL: path and custom host', function(assert) {
 });
 
 test('buildURL: path and params', function(assert) {
-    assert.expect(1);
+    assert.expect(3);
     let service = this.subject();
     let url = service.buildURL('action', {
-        params: testData
+        params: { test2: 2, test1: 1 }
     });
     assert.strictEqual(url, '/action?test1=1&test2=2', 'should return right URL.');
+    url = service.buildURL('action', {
+        params: { a: [1,2,3] },
+        traditional: true
+    });
+    assert.strictEqual(url, '/action?a=1&a=2&a=3', 'should respect jQuery traditional setting.');
+    Ember.$.ajaxSettings.traditional = true;
+    url = service.buildURL('action', {
+        params: { a: [1,2,3] }
+    });
+    Ember.$.ajaxSettings.traditional = undefined;
+    assert.strictEqual(url, '/action?a=1&a=2&a=3', 'should respect jQuery global traditional setting.');
 });
 
 test('buildURL: path and model name', function(assert) {
@@ -118,7 +124,7 @@ test('options: type GET and jsonData set', function(assert) {
     assert.expect(3);
     let result = service.options('action', {
         type: 'GET',
-        jsonData: testData
+        jsonData: { test2: 2, test1: 1 }
     });
     assert.strictEqual(typeof result.contentType, 'undefined', 'contentType should not have been set.');
     assert.strictEqual(typeof result.processData, 'undefined', 'processData should not have been set.');
@@ -127,12 +133,13 @@ test('options: type GET and jsonData set', function(assert) {
 
 test('options: type not GET and jsonData set', function(assert) {
     assert.expect(3);
+    let data = { test2: 2, test1: 1 };
     let result = service.options('action', {
-        jsonData: testData
+        jsonData: data
     });
     assert.strictEqual(result.contentType, 'application/json;charset=UTF-8', 'contentType should have been set to JSON.');
     assert.strictEqual(result.processData, false, 'processData should have been set to false.');
-    assert.deepEqual(result.data,  JSON.stringify(testData), 'data should equal jsonData.');
+    assert.deepEqual(result.data,  JSON.stringify(data), 'data should equal jsonData.');
 });
 
 test('options: type GET and data set', function(assert) {

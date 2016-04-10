@@ -62,7 +62,7 @@ export default AjaxService.extend({
             assert('ember-api-requests expects the model instance to have an id for building an URL.', id);
             requestType = options.requestType || 'findRecord';
             snapshot = model._createSnapshot();
-            modelName = model.constructor.modelName || model.constructor.typeKey;
+            modelName = model.constructor.modelName || model.constructor.typeKey; // use typeKey for BC
         } else if (typeof model === 'string') {
             modelName = options.model;
             requestType = options.requestType || 'findAll';
@@ -73,10 +73,14 @@ export default AjaxService.extend({
         result += path.charAt(0) === '/' ? path : `/${path}`;
 
         if (params) {
-            if (typeof adapter.sortQueryParams === 'function') {
-                params = adapter.sortQueryParams(params);
+            if (typeof params === 'string') {
+                result += `?${params}`;
+            } else if (typeof params === 'object') {
+                if (typeof adapter.sortQueryParams === 'function') {
+                    params = adapter.sortQueryParams(params);
+                }
+                result += `?${Ember.$.param(params, !!options.traditional || !!Ember.$.ajaxSettings.traditional)}`;
             }
-            result += `?${Ember.$.param(params)}`;
         }
 
         return result;
@@ -92,8 +96,9 @@ export default AjaxService.extend({
 	options(url, options = {}) {
         let isGetRequest = options.type ? options.type.toLowerCase() === 'get' : false;
 
+        // Disallow data property for GET requests
         if (isGetRequest && options.data) {
-            assert('ember-api-requests expects a params object to be set for query parameters, instead you passed a data object.');
+            assert("ember-api-requests does not allow the 'data' property to be set for GET requests, instead use the 'params' property.");
         }
 
 		url = this._buildAdapterURL(url, options);

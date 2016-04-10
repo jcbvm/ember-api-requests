@@ -3,6 +3,7 @@
 Service for making custom requests to your backend API.
 
 This service extends [ember-ajax](https://github.com/ember-cli/ember-ajax) but uses [ember-data](https://github.com/ember-cli/ember-data) for building the URL.<br>
+So instead of having to manually create a request URL which may point to one of your model endpoints on the backend, you can pass a model name or instance and this service will generate the right URL prefix for you.<br>
 This way you can make custom requests to your backend API the easy way.
 
 For basic understanding please refer to the ember-ajax [documentation](https://github.com/ember-cli/ember-ajax) first.

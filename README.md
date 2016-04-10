@@ -52,6 +52,8 @@ del('action', { model: user })       // DELETE request to /users/1/action (asumi
 
 ## API
 
+Because this service extends ember-ajax. You are able to do anything ember-ajax can do, like setting a custom host or custom request headers. See the ember-ajax [documentation](https://github.com/ember-cli/ember-ajax) for more details. Below follows the extra API this service provides.
+
 #### Request options
 
 All below options are optional.

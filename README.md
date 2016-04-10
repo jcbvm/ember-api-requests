@@ -60,7 +60,7 @@ All below options are optional.
 |:---|:---|:---|
 | model | Ember Data Model name or instance | Used for constructing the URL. When passing an instance, the `id` of the instance will be added to the generated URL. The service will use the underlying Ember Data Adapter of the model to construct the URL. If this option is omitted, the application adapter will be used to construct the URL. |
 | jsonData | Ojbect | Used for adding a `JSON` request body. Acts the same as defining a `data` object you would normally use when making a jQuery ajax request but additionally sets the content type of the request to `application/json;charset=UTF-8`. This option is only useful when doing a `post`, `put`, or `patch` request. |
-| params | Object | Used to add extra query parameters to the URL. Always use this property when you want to add query parameters to the URL. This differs from jQuery ajax requests, where data may be set for `GET` requests to add query parameters to the URL. |
+| params | Object | Used to add extra query parameters to the URL. Always use this property when you want to add query parameters to the URL. This differs from jQuery ajax requests, where a `data` property may be set for `GET` requests to add query parameters to the URL. |
 | requestType | String | Used by Ember Data to construct the URL. Defaults to `findRecord` when `model` is an instance and `findAll` when `model` is a model name.
 
 #### Service methods

@@ -23,7 +23,7 @@ export default Ember.Service.extend({
   usernameExists(username) {
     return this.get('api').request('check-username', {
       model: 'user',
-      data: {
+      params: {
         username: username
       }
     });
@@ -33,9 +33,9 @@ export default Ember.Service.extend({
 
 When calling above method with username `john`, a request will be made to `/api/users/check-username?username=john`.
 
-The request takes a 'action' path as first parameter and an options object as second parameter. 
-The service will create the URL from the given model name and the corresponding adapter. 
-The rest of the options are simply passed to the underlying jQuery ajax method, so you may pass any additional properties you would normally pass to a jQuery ajax request.
+The request takes a path as first parameter and an options object as second parameter. 
+The options object is the object you would normally pass to a jQuery ajax request, but has some additional reserved properties (see API section below).
+The service will create the URL from the given model name and the corresponding adapter. The params object will be used to add additional query parameters to the URL.
 
 #### HTTP methods
 
@@ -51,6 +51,8 @@ del('action', { model: user })       // DELETE request to /users/1/action (asumi
 ```
 
 ## API
+
+Because this service extends ember-ajax. You are able to do anything ember-ajax can do, like setting a custom host or custom request headers. See the ember-ajax [documentation](https://github.com/ember-cli/ember-ajax) for more details. Below follows the extra API this service provides.
 
 #### Request options
 

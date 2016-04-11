@@ -18,22 +18,31 @@ moduleFor('service:api', {
 
 test('buildURL: path only', function(assert) {
     assert.expect(1);
-    let service = this.subject();
     let url = service.buildURL('action');
     assert.strictEqual(url, '/action', 'should return right URL.');
 });
 
 test('buildURL: path and custom host', function(assert) {
     assert.expect(1);
-    let service = this.subject();
     service.set('host', 'http://example.com');
     let url = service.buildURL('action');
     assert.strictEqual(url, 'http://example.com/action', 'should return right URL.');
 });
 
+test('buildURL: path and custom namespace', function(assert) {
+    // ember-ajax v2.0.0 or later only
+    if (typeof service.raw === 'function') {
+        assert.expect(1);
+        service.set('namespace', 'test');
+        let url = service.buildURL('action');
+        assert.strictEqual(url, '/test/action', 'should return right URL.');
+    } else {
+        assert.expect(0);
+    }
+});
+
 test('buildURL: path and params', function(assert) {
     assert.expect(3);
-    let service = this.subject();
     let url = service.buildURL('action', {
         params: { test2: 2, test1: 1 }
     });

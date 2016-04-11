@@ -41,7 +41,7 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-ajax": "^0.7.1",
+    "ember-ajax": ">=0.7.1 <2.1.0",
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {

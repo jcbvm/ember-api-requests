@@ -1,9 +1,15 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import AjaxService from 'ember-ajax/services/ajax';
+import createParamsString from '../utils/create-params-string';
 
-const { assert, inject } = Ember;
+const { assert, inject, get } = Ember;
 const { Model } = DS;
+const JSONContentType = 'application/json;charset=UTF-8';
+
+function isGetRequest(type) {
+    return typeof type === 'string' && type.toLowerCase() === 'get';
+}
 
 /**
  * Service for making custom requests to a backend API.
@@ -37,7 +43,8 @@ export default AjaxService.extend({
      * @return {String} The full URL
      */
 	buildURL(path, options = {}) {
-		return this._buildURL(this._buildAdapterURL(path, options));
+        let adapterURL = this._buildAdapterURL(path, options);
+		return this._buildURL(adapterURL, options);
 	},
 
     /**
@@ -48,40 +55,26 @@ export default AjaxService.extend({
      * @return {String}
      */
     _buildAdapterURL(path, options = {}) {
-		let id = null,
-            snapshot = null,
-            requestType = null,
-            modelName = null,
-            model = options.model,
-            params = options.params,
-            adapter = null,
-            result = null;
+        let modelName, id, snapshot,
+            requestType = options.requestType,
+            model = options.model;
 
         if (model instanceof Model) {
-            id = model.get('id');
-            assert('ember-api-requests expects the model instance to have an id for building an URL.', id);
-            requestType = options.requestType || 'findRecord';
+            id = get(model, 'id');
+            assert('ember-api-requests expects a model instance to have an `id` set.', id !== null);
+            modelName = model.constructor.modelName || model.constructor.typeKey;
             snapshot = model._createSnapshot();
-            modelName = model.constructor.modelName || model.constructor.typeKey; // use typeKey for BC
+            requestType = requestType || 'findRecord';
         } else if (typeof model === 'string') {
-            modelName = options.model;
-            requestType = options.requestType || 'findAll';
+            modelName = model;
+            requestType = requestType || 'findAll';
         }
 
-        adapter = this.get('store').adapterFor(modelName || 'application');
-        result = adapter.buildURL(modelName, id, snapshot, requestType);
+        let adapter = get(this, 'store').adapterFor(modelName || 'application');
+        let result = adapter.buildURL(modelName, id, snapshot, requestType);
+
         result += path.charAt(0) === '/' ? path : `/${path}`;
-
-        if (params) {
-            if (typeof params === 'string') {
-                result += `?${params}`;
-            } else if (typeof params === 'object') {
-                if (typeof adapter.sortQueryParams === 'function') {
-                    params = adapter.sortQueryParams(params);
-                }
-                result += `?${Ember.$.param(params, !!options.traditional || !!Ember.$.ajaxSettings.traditional)}`;
-            }
-        }
+        result += createParamsString(adapter, options.params, options.traditional);
 
         return result;
     },
@@ -94,19 +87,18 @@ export default AjaxService.extend({
      * @return {Object}
      */
 	options(url, options = {}) {
-        let isGetRequest = options.type ? options.type.toLowerCase() === 'get' : false;
+        let isGetType = isGetRequest(options.type);
 
-        // Disallow data property for GET requests
-        if (isGetRequest && options.data) {
-            assert("ember-api-requests does not allow the 'data' property to be set for GET requests, instead use the 'params' property.");
+        if (isGetType && options.data) {
+            assert("ember-api-requests does not allow the `data` property for `GET` requests, instead use the `params` property.");
         }
 
 		url = this._buildAdapterURL(url, options);
 
-		if (options.jsonData && !isGetRequest) {
+		if (!isGetType && typeof options.jsonData === 'object') {
             options.data = JSON.stringify(options.jsonData);
-            options.contentType = options.contentType || 'application/json;charset=UTF-8';
-            options.processData = !!options.processData;
+            options.contentType = JSONContentType;
+            options.processData = false;
         }
 
 		['jsonData','params','model','requestType'].forEach(i => delete options[i]);

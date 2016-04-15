@@ -1,3 +1,10 @@
+## 0.2.0
+
+- [BUGFIX] Sort query params according to adapter setting
+- [BREAKING] `params` option should now always be used for query params instead of `data` option
+- Added support for ember-ajax 2.0.0
+- Some internal changes
+
 ## 0.1.3
 
 - [FEATURE] Added tests

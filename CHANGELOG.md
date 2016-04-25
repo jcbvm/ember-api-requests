@@ -1,3 +1,8 @@
+## 0.2.1
+
+- Added support for ember-ajax ~2.1.0
+- Updated ember-cli to v2.5.0
+
 ## 0.2.0
 
 - [BUGFIX] Sort query params according to adapter setting

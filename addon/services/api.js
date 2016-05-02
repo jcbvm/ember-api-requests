@@ -5,7 +5,8 @@ import createParamsString from '../utils/create-params-string';
 
 const { assert, inject, get } = Ember;
 const { Model } = DS;
-const JSONContentType = 'application/json;charset=UTF-8';
+const JSONContentType = 'application/json; charset=UTF-8';
+const URLEncodedContentType = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 function isGetRequest(type) {
     return typeof type === 'string' && type.toLowerCase() === 'get';
@@ -95,10 +96,15 @@ export default AjaxService.extend({
 
 		url = this._buildAdapterURL(url, options);
 
-		if (!isGetType && typeof options.jsonData === 'object') {
-            options.data = JSON.stringify(options.jsonData);
-            options.contentType = JSONContentType;
-            options.processData = false;
+		if (!isGetType) {
+            if (typeof options.jsonData === 'object') {
+                options.data = JSON.stringify(options.jsonData);
+                options.contentType = JSONContentType;
+                options.processData = false;
+            }
+            if (options.params && options.data && !Object.keys(options.data).length) {
+                options.contentType = URLEncodedContentType;
+            }
         }
 
 		['jsonData','params','model','requestType'].forEach(i => delete options[i]);

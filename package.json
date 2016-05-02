@@ -1,6 +1,6 @@
 {
   "name": "ember-api-requests",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Service for making custom requests to a backend API.",
   "directories": {
     "doc": "doc",

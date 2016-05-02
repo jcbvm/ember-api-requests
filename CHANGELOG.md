@@ -1,3 +1,7 @@
+## 0.2.2
+
+- [BUGFIX] Use urlencoded content type for non-get requests with only query parameters
+
 ## 0.2.1
 
 - Added support for ember-ajax ~2.1.0

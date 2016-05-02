@@ -102,7 +102,7 @@ export default AjaxService.extend({
                 options.contentType = JSONContentType;
                 options.processData = false;
             }
-            if (options.params && options.data && !Object.keys(options.data).length) {
+            if (options.params && (!options.data || typeof options.data === 'object' && !Object.keys(options.data).length)) {
                 options.contentType = URLEncodedContentType;
             }
         }

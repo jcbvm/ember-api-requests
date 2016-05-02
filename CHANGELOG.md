@@ -1,3 +1,7 @@
+## 0.2.3
+
+- [BUGFIX] Fixed check for using urlencoded content type for non-get requests with only query parameters
+
 ## 0.2.2
 
 - [BUGFIX] Use urlencoded content type for non-get requests with only query parameters

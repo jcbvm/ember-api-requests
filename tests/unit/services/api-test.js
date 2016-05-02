@@ -146,7 +146,7 @@ test('options: type not GET and jsonData set', function(assert) {
     let result = service.options('action', {
         jsonData: data
     });
-    assert.strictEqual(result.contentType, 'application/json;charset=UTF-8', 'contentType should have been set to JSON.');
+    assert.strictEqual(result.contentType, 'application/json; charset=UTF-8', 'contentType should have been set to JSON.');
     assert.strictEqual(result.processData, false, 'processData should have been set to false.');
     assert.deepEqual(result.data,  JSON.stringify(data), 'data should equal jsonData.');
 });

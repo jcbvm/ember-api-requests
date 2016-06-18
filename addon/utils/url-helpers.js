@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const AjaxSettings = Ember.$.ajaxSettings;
 
-export default function(adapter, params, traditional) {
+export function createQueryParams(adapter, params, traditional) {
     if (typeof params === 'string') {
         return `?${params}`;
     }

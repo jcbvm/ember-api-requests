@@ -1,26 +1,26 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import AjaxService from 'ember-ajax/services/ajax';
-import createParamsString from '../utils/create-params-string';
+import AjaxRequestMixin from 'ember-ajax/mixins/ajax-request';
+import { createQueryParams } from '../utils/url-helpers';
 
-const { assert, inject, get } = Ember;
+const { Service, assert, inject, get } = Ember;
 const { Model } = DS;
 const JSONContentType = 'application/json; charset=UTF-8';
-const URLEncodedContentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-
-function isGetRequest(type) {
-    return typeof type === 'string' && type.toLowerCase() === 'get';
-}
 
 /**
  * Service for making custom requests to a backend API.
- * This service extends ember-ajax but uses ember-data for building the URL.
+ *
+ * This service uses both ember-ajax and ember-data for constructing the URL.
+ * The service will alter the path passed to ember-ajax by first transforming the path
+ * into a ember-data path. It creates the ember-data path by a given model instance or name
+ * and using the corresponding adapter (or the application adapter if no model instance
+ * or name is given).
  *
  * @module ember-api-requests
  * @class ApiService
- * @extends AjaxService
+ * @extends Service
  */
-export default AjaxService.extend({
+export default Service.extend(AjaxRequestMixin, {
     store: inject.service(),
 
     /**
@@ -43,19 +43,19 @@ export default AjaxService.extend({
      * @param {Object} options Options for building the URL (optional)
      * @return {String} The full URL
      */
-	buildURL(path, options = {}) {
+    buildURL(path, options = {}) {
         let adapterURL = this._buildAdapterURL(path, options);
-		return this._buildURL(adapterURL, options);
-	},
+        return this._buildURL(adapterURL, options);
+    },
 
     /**
      * @method _buildAdapterURL
-	 * @private
-     * @param {String} path
+     * @private
+     * @param {String} url
      * @param {Object} options
      * @return {String}
      */
-    _buildAdapterURL(path, options = {}) {
+    _buildAdapterURL(url, options = {}) {
         let modelName, id, snapshot,
             requestType = options.requestType,
             model = options.model;
@@ -74,49 +74,46 @@ export default AjaxService.extend({
         let adapter = get(this, 'store').adapterFor(modelName || 'application');
         let result = adapter.buildURL(modelName, id, snapshot, requestType);
 
-        result += path.charAt(0) === '/' ? path : `/${path}`;
-        result += createParamsString(adapter, options.params, options.traditional);
+        result += url.charAt(0) === '/' ? url : `/${url}`;
+        result += createQueryParams(adapter, options.params, options.traditional);
 
         return result;
     },
 
-	/**
+    /**
      * @method options
-	 * @private
+     * @private
      * @param {String} url
      * @param {Object} options
      * @return {Object}
      */
-	options(url, options = {}) {
-        let isGetType = isGetRequest(options.type);
-
+    options(url, options = {}) {
+        // Skip the process if url is already set
+        if (options.url) {
+            return options;
+        }
+        
+        let isGetType = options.type === 'GET';
         if (isGetType && options.data) {
             assert("ember-api-requests does not allow the `data` property for `GET` requests, instead use the `params` property.");
         }
-
-		url = this._buildAdapterURL(url, options);
-
-		if (!isGetType) {
-            if (typeof options.jsonData === 'object') {
-                options.data = JSON.stringify(options.jsonData);
-                options.contentType = JSONContentType;
-                options.processData = false;
-            }
-            if (options.params && (!options.data || typeof options.data === 'object' && !Object.keys(options.data).length)) {
-                options.contentType = URLEncodedContentType;
-            }
+        
+        url = this._buildAdapterURL(url, options);
+        if (!isGetType && typeof options.jsonData === 'object') {
+            options.data = JSON.stringify(options.jsonData);
+            options.contentType = JSONContentType;
+            options.processData = false;
         }
-
-		['jsonData','params','model','requestType'].forEach(i => delete options[i]);
+        ['jsonData','params','model','requestType'].forEach(i => delete options[i]);
 
         let hasDataType = !!options.dataType;
-		let result = this._super(url, options);
+        let result = this._super(url, options);
 
-		// Only set dataType when defined as option, this differs from ember-ajax
+        // Only set dataType when defined as option, this differs from ember-ajax
         if (!hasDataType) {
             delete result.dataType;
         }
 
         return result;
-	}
+    }
 });

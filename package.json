@@ -1,6 +1,6 @@
 {
   "name": "ember-api-requests",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Service for making custom requests to a backend API.",
   "directories": {
     "doc": "doc",
@@ -42,7 +42,7 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-ajax": ">=0.7.1 <2.2.0",
+    "ember-ajax": "^2.4.1",
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {

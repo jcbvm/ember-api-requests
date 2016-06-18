@@ -30,15 +30,10 @@ test('buildURL: path and custom host', function(assert) {
 });
 
 test('buildURL: path and custom namespace', function(assert) {
-    // ember-ajax v2.0.0 or later only
-    if (typeof service.raw === 'function') {
-        assert.expect(1);
-        service.set('namespace', 'test');
-        let url = service.buildURL('action');
-        assert.strictEqual(url, '/test/action', 'should return right URL.');
-    } else {
-        assert.expect(0);
-    }
+	assert.expect(1);
+	service.set('namespace', 'test');
+	let url = service.buildURL('action');
+	assert.strictEqual(url, '/test/action', 'should return right URL.');
 });
 
 test('buildURL: path and params', function(assert) {
@@ -159,4 +154,17 @@ test('options: type GET and data set', function(assert) {
             data: {}
         });
     }, 'should throw an error.');
+});
+
+test('options: calling twice', function(assert) {
+    assert.expect(1);
+    Ember.run(() => {
+        store.adapterFor('user').set('namespace', 'api');
+        store.push({ data: { type: 'user', id: '1' }});
+        let result1 = service.options('action', {
+            model: store.peekRecord('user', 1)
+        });
+		let result2 = service.options('action', JSON.parse(JSON.stringify(result1)));
+        assert.deepEqual(result1, result2, 'result should remain the same.');
+    });
 });

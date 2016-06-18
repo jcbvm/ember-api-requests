@@ -1,3 +1,8 @@
+## 0.3.0
+
+- [FEATURE] Refactor service by making use of the new ember-ajax mixin. [#1](https://github.com/jcbvm/ember-api-requests/issues/1)
+- [BUGFIX] New version of ember-ajax calls `options` twice, make sure to return the right data if this happens.  [#1](https://github.com/jcbvm/ember-api-requests/issues/1)
+
 ## 0.2.3
 
 - [BUGFIX] Fixed check for using urlencoded content type for non-get requests with only query parameters

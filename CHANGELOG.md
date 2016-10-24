@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Updated project to ember-cli 2.9.1 and loosened ember-ajax version
+
 ## 0.3.0
 
 - [FEATURE] Refactor service by making use of the new ember-ajax mixin. [#1](https://github.com/jcbvm/ember-api-requests/issues/1)

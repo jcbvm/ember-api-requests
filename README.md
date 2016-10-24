@@ -11,7 +11,7 @@ For basic understanding please refer to the ember-ajax [documentation](https://g
 
 ## Usage
 
-To use the service, inject it into your route, component, service or other part of your app.
+To use the service, inject it into your route, component, service or other part of your ember app.
 
 Suppose your application adapter has `/api` as namespace and you have a model called `user` and you want to check if an username already exists:
 

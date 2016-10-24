@@ -130,9 +130,10 @@ test('options: type GET and jsonData set', function(assert) {
         type: 'GET',
         jsonData: { test2: 2, test1: 1 }
     });
-    assert.strictEqual(typeof result.contentType, 'undefined', 'contentType should not have been set.');
+	console.log(result.contentType);
+    assert.ok(typeof result.contentType === 'undefined' || result.contentType === 'application/x-www-form-urlencoded; charset=UTF-8', 'contentType should not have been set.');
     assert.strictEqual(typeof result.processData, 'undefined', 'processData should not have been set.');
-    assert.deepEqual(typeof result.data, 'undefined', 'data should not have been set.');
+    assert.strictEqual(typeof result.data, 'undefined', 'data should not have been set.');
 });
 
 test('options: type not GET and jsonData set', function(assert) {

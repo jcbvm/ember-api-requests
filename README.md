@@ -75,8 +75,8 @@ All below options are optional.
 ## Examples
 
 ```javascript
-this.get('api').request('authenticate', {
-  params: {
+this.get('api').post('authenticate', {
+  data: {
 	username: 'john',
 	password: 'password'
   }

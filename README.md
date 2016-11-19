@@ -82,7 +82,7 @@ this.get('api').post('authenticate', {
   }
 });
 ```
-`GET` request to `/authenticate?username=john&password=password`
+`POST` request to `/authenticate?username=john&password=password`
 
 ```javascript
 this.get('api').request('logout');

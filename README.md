@@ -82,7 +82,7 @@ this.get('api').post('authenticate', {
   }
 });
 ```
-`POST` request to `/authenticate?username=john&password=password`
+`POST` request to `/authenticate` with url encoded form data `username=john&password=password`
 
 ```javascript
 this.get('api').request('logout');
@@ -97,7 +97,7 @@ this.get('api').post('notify', {
   }
 });
 ```
-`POST` request to `/users/1/notify` with content type `application/json;charset=UTF-8` and body `{"text":"Hello"}`
+`POST` request to `/users/{id}/notify` with content type `application/json;charset=UTF-8` and body `{"text":"Hello"}`
 
 ```javascript
 this.get('api').put('split', {
@@ -107,7 +107,7 @@ this.get('api').put('split', {
   }
 });
 ```
-`PUT` request to `/documents/1/split?page[]=2&page[]=4`
+`PUT` request to `/documents/{id}/split?page[]=2&page[]=4`
 
 ## License
 

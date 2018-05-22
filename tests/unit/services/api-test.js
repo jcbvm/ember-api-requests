@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import DS from 'ember-data';
 import { moduleFor, test } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
 let service, store;
 
@@ -47,17 +48,17 @@ test('buildURL: path and params', function(assert) {
         traditional: true
     });
     assert.strictEqual(url, '/action?a=1&a=2&a=3', 'should respect jQuery traditional setting.');
-    Ember.$.ajaxSettings.traditional = true;
+    $.ajaxSettings.traditional = true;
     url = service.buildURL('action', {
         params: { a: [1,2,3] }
     });
-    Ember.$.ajaxSettings.traditional = undefined;
+    $.ajaxSettings.traditional = undefined;
     assert.strictEqual(url, '/action?a=1&a=2&a=3', 'should respect jQuery global traditional setting.');
 });
 
 test('buildURL: path and model name', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         let url = service.buildURL('action', {
             model: 'user'
         });
@@ -67,7 +68,7 @@ test('buildURL: path and model name', function(assert) {
 
 test('buildURL: path and model name and custom adapter', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         store.adapterFor('user').set('namespace', 'api');
         let url = service.buildURL('action', {
             model: 'user'
@@ -78,7 +79,7 @@ test('buildURL: path and model name and custom adapter', function(assert) {
 
 test('buildURL: path and model instance', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         store.push({ data: { type: 'user', id: '1' }});
         let url = service.buildURL('action', {
             model: store.peekRecord('user', 1)
@@ -89,7 +90,7 @@ test('buildURL: path and model instance', function(assert) {
 
 test('buildURL: path and model instance without id', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         assert.throws(() => {
             service.buildURL('action', {
                 model: store.createRecord('user')
@@ -100,7 +101,7 @@ test('buildURL: path and model instance without id', function(assert) {
 
 test('buildURL: path and model instance and custom adapter', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         store.adapterFor('user').set('namespace', 'api');
         store.push({ data: { type: 'user', id: '1' }});
         let url = service.buildURL('action', {
@@ -130,7 +131,6 @@ test('options: type GET and jsonData set', function(assert) {
         type: 'GET',
         jsonData: { test2: 2, test1: 1 }
     });
-	console.log(result.contentType);
     assert.ok(typeof result.contentType === 'undefined' || result.contentType === 'application/x-www-form-urlencoded; charset=UTF-8', 'contentType should not have been set.');
     assert.strictEqual(typeof result.processData, 'undefined', 'processData should not have been set.');
     assert.strictEqual(typeof result.data, 'undefined', 'data should not have been set.');
@@ -159,7 +159,7 @@ test('options: type GET and data set', function(assert) {
 
 test('options: calling twice', function(assert) {
     assert.expect(1);
-    Ember.run(() => {
+    run(() => {
         store.adapterFor('user').set('namespace', 'api');
         store.push({ data: { type: 'user', id: '1' }});
         let result1 = service.options('action', {

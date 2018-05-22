@@ -1,9 +1,10 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 import AjaxRequestMixin from 'ember-ajax/mixins/ajax-request';
+import Service, { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
+import { get } from '@ember/object';
 import { createQueryParams } from '../utils/url-helpers';
 
-const { Service, assert, inject, get } = Ember;
 const { Model } = DS;
 const JSONContentType = 'application/json; charset=UTF-8';
 
@@ -21,7 +22,7 @@ const JSONContentType = 'application/json; charset=UTF-8';
  * @extends Service
  */
 export default Service.extend(AjaxRequestMixin, {
-    store: inject.service(),
+    store: service(),
 
     /**
      * Build an URL based on given path and options.
@@ -63,7 +64,7 @@ export default Service.extend(AjaxRequestMixin, {
         if (model instanceof Model) {
             id = get(model, 'id');
             assert('ember-api-requests expects a model instance to have an `id` set.', id !== null);
-            modelName = model.constructor.modelName || model.constructor.typeKey;
+            modelName = model.constructor.modelName || model.constructor.typeKey || model._internalModel.modelName;
             snapshot = model._createSnapshot();
             requestType = requestType || 'findRecord';
         } else if (typeof model === 'string') {

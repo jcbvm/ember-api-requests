@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
 
-const AjaxSettings = Ember.$.ajaxSettings;
+const AjaxSettings = $.ajaxSettings;
 
 export function createQueryParams(adapter, params, traditional) {
     if (typeof params === 'string') {
@@ -11,7 +11,7 @@ export function createQueryParams(adapter, params, traditional) {
             params = adapter.sortQueryParams(params);
         }
         traditional = typeof traditional === 'boolean' ? traditional : !!AjaxSettings.traditional;
-        return `?${Ember.$.param(params, traditional)}`;
+        return `?${$.param(params, traditional)}`;
     }
     return '';
 }

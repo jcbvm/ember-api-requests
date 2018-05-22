@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Updated project to ember-cli 3.1.3 and moved to yarn
+
 ## 0.3.1
 
 - Updated project to ember-cli 2.9.1 and loosened ember-ajax version

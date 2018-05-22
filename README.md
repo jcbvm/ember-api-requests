@@ -44,7 +44,7 @@ All basic HTTP methods are supported:
 
 ```javascript
 request('action', { model: 'user' }) // GET request to /users/action
-request('action', { model: user })   // GET request to /users/1/action
+request('action', { model: user })   // GET request to /users/1/action (asuming user is a model with id 1)
 post('action', { model: 'user' })    // POST request to /users/action
 put('action', { model: user })       // PUT request to /users/1/action (asuming user is a model with id 1)
 patch('action', { model: user })     // PATCH request to /users/1/action (asuming user is a model with id 1)

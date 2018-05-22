@@ -1,6 +1,6 @@
 {
   "name": "ember-api-requests",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Service for making custom requests to a backend API.",
   "repository": "git://github.com/jcbvm/ember-api-requests.git",
   "license": "MIT",

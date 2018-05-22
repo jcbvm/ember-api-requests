@@ -1,4 +1,4 @@
-## 0.4.0
+## 1.0.0
 
 - Updated project to ember-cli 3.1.3 and moved to yarn
 

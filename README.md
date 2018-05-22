@@ -16,10 +16,10 @@ To use the service, inject it into your route, component, service or other part 
 Suppose your application adapter has `/api` as namespace and you have a model called `user` and you want to check if an username already exists:
 
 ```javascript
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
-  api: Ember.inject.service(),
+export default Service.extend({
+  api: service(),
   
   usernameExists(username) {
     return this.get('api').request('check-username', {

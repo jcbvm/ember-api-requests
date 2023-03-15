@@ -1,3 +1,5 @@
+THIS PROJECT IS NO LONGER MAINTAINED
+
 # ember-api-requests
 [![Build Status](https://travis-ci.org/jcbvm/ember-api-requests.svg?branch=master)](https://travis-ci.org/jcbvm/ember-api-requests) [![Ember Observer Score](https://emberobserver.com/badges/ember-api-requests.svg)](https://emberobserver.com/addons/ember-api-requests) [![Code Climate](https://codeclimate.com/github/jcbvm/ember-api-requests/badges/gpa.svg)](https://codeclimate.com/github/jcbvm/ember-api-requests) [![npm version](https://badge.fury.io/js/ember-api-requests.svg)](https://badge.fury.io/js/ember-api-requests)
 
